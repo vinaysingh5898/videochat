@@ -1,0 +1,83 @@
+{% include 'header.html'%}
+{% load staticfiles %}
+{%load crispy_forms_tags%}
+
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+
+<h2>BOOKS DATA</h2>
+
+<table>
+	<tr>
+    	<th>Title</th>
+    	<th>Authors</th>
+    	<th>Add Book</th>
+    	<th>Delete Book</th>
+  	</tr>
+	{%for x in book%}
+		<tr>
+			<th>{{x.Title}}</th> 
+			<th>{{x.Authors}}</th>
+			<th><input type="button" onclick="AddToCart({{x.id}})" name="submit" value="Add to cart" class="btn btn-success"></th>
+			<th>
+				<button class="btn btn-success" onclick="deleteFromCart({{x.id}})" value="Delete">X 
+				</button>
+			</th>
+		</tr>
+	{% endfor %}
+</table>
+</body>
+
+<script type="text/javascript">
+
+	var AddToCart=function($Book_id) {
+			// if( confirm('Do you want Delete this Author')){
+				$.get("/add-to-cart/"+$Book_id)
+				.done(
+					function(data) {
+						console.log(data);
+						// alert(data)
+						//toastr.info(data)
+						
+					}
+					);
+			// }
+		};
+
+		var deleteFromCart=function($id) {
+			if( confirm('Do you want remove book from cart?')){
+				$.get("/delete-book-from-cart/"+$id)
+				.done(
+					function(data) {
+						// console.log(data);
+						$('#cartviewId').html(data);
+						// toastr.info("Book has been removed from cart!")
+						$().toastmessage('showSuccessToast', "Author is deleted!.");
+					}
+					);
+			}
+		};
+		
+</script>
+{% include 'footer.html' %}
