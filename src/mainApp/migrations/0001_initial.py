@@ -13,16 +13,31 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='user_info',
+            name='Book',
             fields=[
-                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
-                ('PriPhone', models.DecimalField(decimal_places=False, max_digits=10)),
-                ('LandMark', models.CharField(blank=True, max_length=500, null=True)),
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('Title', models.CharField(null=True, max_length=120)),
+                ('Authors', models.CharField(null=True, max_length=120)),
+                ('Updated_at', models.DateTimeField(auto_now=True)),
+                ('Created_at', models.DateTimeField(auto_now_add=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Cart',
+            fields=[
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('BookId', models.ForeignKey(to='mainApp.Book')),
+                ('UserId', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='UserInfo',
+            fields=[
+                ('id', models.AutoField(auto_created=True, serialize=False, primary_key=True, verbose_name='ID')),
+                ('PriPhone', models.DecimalField(max_digits=10, decimal_places=False)),
                 ('City', models.CharField(max_length=500, default='')),
                 ('State', models.CharField(max_length=500, default='')),
                 ('Country', models.CharField(max_length=500, default='')),
-                ('PinCode', models.DecimalField(decimal_places=False, max_digits=6)),
-                ('AddressLine', models.CharField(blank=True, max_length=500, null=True)),
                 ('Updated_at', models.DateTimeField(auto_now=True)),
                 ('Created_at', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),

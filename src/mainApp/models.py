@@ -4,13 +4,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 class UserInfo(models.Model):
 	user=models.ForeignKey(User)
-	PriPhone=models.DecimalField(max_digits=10, decimal_places=False,blank=False)
-	LandMark=models.CharField(max_length=500,blank=True,null=True)
-	City=models.CharField(max_length=500, default='')
-	State=models.CharField(max_length=500, default='')
-	Country=models.CharField(max_length=500,default='')
-	PinCode=models.DecimalField(max_digits=6, decimal_places=False,blank=False)
-	AddressLine=models.CharField(max_length=500,blank=True,null=True)
+	PriPhone=models.DecimalField(max_digits=10, decimal_places=False)
+	City=models.CharField(max_length=500, default='',blank=True)
+	State=models.CharField(max_length=500, default='',blank=True)
+	Country=models.CharField(max_length=500,default='',blank=True)
 	Updated_at=models.DateTimeField(auto_now_add=False,auto_now=True)
 	Created_at=models.DateTimeField(auto_now_add=True,auto_now=False)
 	def __str__(self):

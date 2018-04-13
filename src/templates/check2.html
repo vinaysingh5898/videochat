@@ -48,15 +48,15 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 			<div class="w3-third">
 				<table>
 					<tr>
-						<th>Username</th>
-						<th>Name</th>
-						<th>Call</th>
+						<th>User</th>
+						<th>Email</th>
+						<th>Call/Join</th>
 					</tr>
 					{%for x in users%}
 					<tr>
 						<th>{{x.username}}</th> 
-						<th>{{x.first_name}}</th>
-						<th><a class="btn btn-success" href="{% url 'chatroom' Uname=x.username %}">Call</a></th>
+						<th>{{x.email}}</th>
+						<th><li><a href="{% url 'chatroom' User_name=x.username%}">Call</a></li></th>
 					</tr>
 					{% endfor %}
 				</table>

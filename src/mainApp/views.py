@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .forms import *
 from .models import *
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 from django.contrib.auth import (
 	authenticate,
@@ -16,22 +17,18 @@ from django.contrib.auth import (
 def login_function(request):
 	title="You are loged in"
 	form=LoginForm(request.POST or None)
-	print("1")
 	if form.is_valid():
 		username=form.cleaned_data.get("username")
 		password=form.cleaned_data.get("password")
 		user=authenticate(username=username,password=password)
 		login(request,user)
-		print("2")
 	if request.user.is_authenticated():
-		print("3")
-		form2=BookForm(request.POST or None)
-		if form2.is_valid():
-			profile=form2.save(commit=False)
-			profile.User_id=request.user.id
-			profile.save()
-			return HttpResponseRedirect('../login')	
-		return render(request,"check.html",{"form":form,"form2":form2,"title":title})
+		users=User.objects.filter(~Q(username=request.user.username))
+		#print(request.user.username)
+		src1='"https://tokbox.com/embed/embed/ot-embed.js?embedId=d093d3aa-342a-4f78-9f6e-3f4f7e59dda4&room='
+		src=src1+request.user.username+'"'
+		print(src)
+		return render(request,"check.html",{"users":users,"src":src})
 	return render(request,"login.html",{"form":form})
 
 def registration(request):
@@ -53,7 +50,12 @@ def registration(request):
 		t=userprofile.save()
 
 	if(request.user.is_authenticated()):
-		return render(request,"check.html",context)
+		users=User.objects.filter(~Q(username=request.user.username))
+		#print(request.user.username)
+		src1='"https://tokbox.com/embed/embed/ot-embed.js?embedId=d093d3aa-342a-4f78-9f6e-3f4f7e59dda4&room='
+		src=src1+request.user.username+'"'
+		print(src)
+		return render(request,"check.html",{"users":users,"src":src})
 	return render(request,"registration.html",context)
 
 def deleteBookFromCart(request,id=None):
@@ -87,3 +89,13 @@ def show_data(request):
 		book=Book.objects.filter()
 		return render(request,"show.html",{"book":book})
 	return render(request,"registration.html",context)
+
+def chatroom(request,Uname=None):
+	if request.user.is_authenticated():
+		users=User.objects.filter(~Q(username=request.user.username))
+		print(type(users))
+		src1='"https://tokbox.com/embed/embed/ot-embed.js?embedId=d093d3aa-342a-4f78-9f6e-3f4f7e59dda4&room='
+		src=src1+Uname+'"'
+		#print(src)
+		return render(request,"check.html",{"users":users,"src":src})
+	return render(request,"login.html",{})

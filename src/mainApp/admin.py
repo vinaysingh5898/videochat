@@ -6,7 +6,7 @@ from .forms import *
 # Register your models here.
 
 class UserInfoAdmin(admin.ModelAdmin):
-	list_display=["id","user","PriPhone","LandMark","City","State","Country","PinCode","AddressLine","Updated_at","Created_at"]
+	list_display=["id","user","PriPhone","City","State","Country","Updated_at","Created_at"]
 	form=UserInfoForm
 	class Meta:
 		model = UserInfo

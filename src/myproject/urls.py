@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^login/$','mainApp.views.login_function',name='login'),
     url(r'^show_data/$','mainApp.views.show_data',name='show_data'),
     url(r'^add-to-cart/(?P<Book_id>\d+)','mainApp.views.addToCart',name='add-to-cart'),
+    url(r'^chatroom/(?P<Uname>\w+)','mainApp.views.chatroom',name='chatroom'),
     url(r'^delete-book-from-cart/(?P<id>\d+)','mainApp.views.deleteBookFromCart',name='delete-book-from-cart'),
     url(r'^logout/$', 'django.contrib.auth.views.logout',{'next_page':'/login'},name='logout')
 ]

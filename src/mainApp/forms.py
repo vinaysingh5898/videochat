@@ -55,12 +55,9 @@ class UserInfoForm(forms.ModelForm):
 		model=UserInfo
 		fields=[
 		'PriPhone',
-		'LandMark',
 		'City',
 		'State',
 		'Country',
-		'PinCode',
-		'AddressLine',
 		]
 
 class BookForm(forms.ModelForm):
